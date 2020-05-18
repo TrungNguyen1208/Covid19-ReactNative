@@ -11,7 +11,7 @@ function TabBar({ state, descriptors, navigation }) {
         <View
             style={{
                 flexDirection: 'row',
-                padding: 10,
+                padding: 5,
             }}
         >
             {state.routes.map((route, index) => {
@@ -40,21 +40,21 @@ function TabBar({ state, descriptors, navigation }) {
                 return (
                     <Button
                         key={label}
-                        height={55}
+                        height={40}
                         flex={1}
-                        pt={8}
+                        pt={5}
                         justifyContent='center'
                         alignItems='center'
                         onPress={onPress}
                     >
                         {label === 'Home' && (
-                            <SvgHome color={colorIcon} />
+                            <SvgHome color={colorIcon} width={36} height={36} />
                         )}
                         {label === 'Search' && (
-                            <SvgSearch color={colorIcon} />
+                            <SvgSearch color={colorIcon} width={36} height={36} />
                         )}
                         <Box
-                            mt={8}
+                            mt={5}
                             size={5}
                             borderRadius={20}
                             bg={isFocused ? 'textDark' : 'transparent'}
