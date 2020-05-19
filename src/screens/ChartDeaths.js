@@ -3,6 +3,7 @@ import LineChart from 'react-native-responsive-linechart';
 import { ActivityIndicator, ScrollView } from 'react-native';
 
 import i18n from '../i18n';
+import _ from 'lodash'
 
 import Text from '../components/Base/Text';
 import Box from '../components/Base/Box';
@@ -14,6 +15,7 @@ export default function ChartDeaths({ route, navigation }) {
     const [valuesData, setValuesData] = useState([]);
     const [keysData, setKeysData] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [stepSize, setStepSize] = useState(2500);
 
     const getCountryData = async () => {
         setLoading(true);
@@ -25,8 +27,15 @@ export default function ChartDeaths({ route, navigation }) {
 
         const countryValues = Object.values(data);
         const keysValues = Object.keys(data);
+        const newestValue = _.last(countryValues);
+        if (newestValue > 1000) {
+            setStepSize(Math.round(newestValue / 10000) * 1000)
+        } else {
+            setStepSize(100);
+        }
         await setValuesData(countryValues);
         await setKeysData(keysValues);
+
         setLoading(false);
     };
 
@@ -61,7 +70,7 @@ export default function ChartDeaths({ route, navigation }) {
             label: { visible: true, marginBottom: 20 },
         },
         grid: {
-            stepSize: 2500,
+            stepSize: stepSize || 2500,
         },
         yAxis: {
             visible: true,

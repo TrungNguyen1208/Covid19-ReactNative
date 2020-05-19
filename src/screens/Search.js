@@ -52,10 +52,10 @@ function SearchScreen({navigation}) {
 
     const getSummaryData = async (sort = 'active') => {
         setLoading(true);
-        const respone = await fetch(
+        const response = await fetch(
             `https://corona.lmao.ninja/v2/countries?sort=${sort}`,
         );
-        const data = await respone.json();
+        const data = await response.json();
         setCountriesData(data);
         setAllData(data);
 
@@ -70,6 +70,12 @@ function SearchScreen({navigation}) {
     useEffect(() => {
         getSummaryData();
     }, []);
+
+    useEffect(() => {
+        if (isClickedSearch && this.inputSearch) {
+            this.inputSearch.focus();
+        }
+    }, [isClickedSearch]);
 
     useFocusEffect(
         React.useCallback(() => {
@@ -92,8 +98,7 @@ function SearchScreen({navigation}) {
     };
 
     const onClickOptionSearch = async () => {
-        await setIsClickedSearch(true);
-        if (this.inputSearch) this.inputSearch.focus();
+        setIsClickedSearch(true);
     };
 
     const onChangeSearchText = (text) => {
